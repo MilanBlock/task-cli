@@ -59,7 +59,7 @@ def adding(tasks, last_id):
 
 
 def renaming(tasks):
-    """Changing the name of a task"""
+    """Change the name of a task"""
     if len(sys.argv) < 4:
         print("Usage: task_cil.py rename [index old task] [new task name]")
         return
@@ -76,7 +76,16 @@ def renaming(tasks):
 
 def deleting(tasks):
     """Delete task"""
-    print("Deleted Task TODO")
+    if len(sys.argv) < 3:
+        print("Usage: task_cil.py delete [index task to delete]")
+        return
+    
+    index = int(sys.argv[2])
+
+    for task in tasks:
+        if task["id"] == index:
+            tasks.remove(task)
+            break
 
 
 def listing(tasks):
