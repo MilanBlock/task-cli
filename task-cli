@@ -26,7 +26,7 @@ def main():
     last_id = data["lastId"]
 
     if len(sys.argv) < 2:
-        print("Usage: task_cli.py [option] [additional arguments]")
+        print("Usage: task--cli [option] [additional arguments]")
     elif sys.argv[1] == "add":
         last_id = adding(tasks, last_id)
     elif sys.argv[1] == "rename":
@@ -52,7 +52,7 @@ def main():
 def adding(tasks, last_id):
     """Add a new task"""
     if len(sys.argv) < 3:
-        print("Usage: task_cil.py add [task name]")
+        print("Usage: task_cli add [task name]")
         return last_id
 
     last_id += 1
@@ -73,7 +73,7 @@ def adding(tasks, last_id):
 def renaming(tasks):
     """Change the name of a task"""
     if len(sys.argv) < 4:
-        print("Usage: task_cil.py rename [index old task] [new task name]")
+        print("Usage: task-cli rename [index old task] [new task name]")
         return
 
     index = int(sys.argv[2])
@@ -89,7 +89,7 @@ def renaming(tasks):
 def deleting(tasks):
     """Delete task"""
     if len(sys.argv) < 3:
-        print("Usage: task_cil.py delete [index task to delete]")
+        print("Usage: task-cli delete [index task to delete]")
         return
     
     index = int(sys.argv[2])
@@ -103,7 +103,7 @@ def deleting(tasks):
 def marking(tasks):
     """Set status of task"""
     if len(sys.argv) < 4:
-        print("Usage: task_cil.py mark [index task] [status]")
+        print("Usage: task-cli mark [index task] [status]")
         return
     
     index = int(sys.argv[2])
