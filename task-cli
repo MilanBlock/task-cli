@@ -179,6 +179,10 @@ def listing(tasks):
             space_description
         ])
     
+    # If no task is displayed, show an empty row
+    if len(filtered_tasks) == 0:
+        print(f"|{' ' * space_id}|{' ' * space_status}|{' ' * space_description}|")
+    
     # Print cut-off line
     print(seperator_line)
 
