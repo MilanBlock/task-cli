@@ -7,17 +7,21 @@ import sys
 def main():
     """Loading tasks, calling correct update funcion and saving task"""
     # Loading task
-    tasks = []
     try:
         with open("tasks.json", "r", encoding="utf-8") as f:
-            tasks = json.load(f)
+            data = json.load(f)
     except (FileNotFoundError, json.decoder.JSONDecodeError):
-        pass
+        data = {
+            "lastId": 0,
+            "tasks": []
+        }
+    tasks = data["tasks"]
+    last_id = data["lastId"]
 
     if len(sys.argv) < 2:
         print("Usage: task_cli.py [action] [additional arguments]")
     elif sys.argv[1] == "add":
-        adding(tasks)
+        last_id = adding(tasks, last_id)
     elif sys.argv[1] == "update":
         updating(tasks)
     elif sys.argv[1] == "delete":
@@ -25,28 +29,41 @@ def main():
     elif sys.argv[1] == "list":
         listing(tasks)
 
+    data["lastId"] = last_id
+
     # Saving task
     with open("tasks.json", "w", encoding="utf-8") as f:
-        json.dump(tasks, f, indent=4)
+        json.dump(data, f, indent=4)
 
 
-def adding(tasks):
+def adding(tasks, last_id):
     """Add a new task"""
     if len(sys.argv) < 3:
         print("Usage: task_cil.py add [task name]")
-        return
+        return last_id
 
+    last_id += 1
+    current_date = str(datetime.datetime.now())
     tasks.append({
+        "id": last_id,
         "description": sys.argv[2],
         "status": "todo",
-        "createdAt": str(datetime.datetime.now()),
-        "updatedAt": str(datetime.datetime.now())
+        "createdAt": current_date,
+        "updatedAt": current_date
     })
+
+    print(f"Task added successfully (ID: {last_id})")
+
+    return last_id
 
 
 def updating(tasks):
     """Changing the name of a task"""
-    print("Updated Task TODO")
+    if len(sys.argv) < 4:
+        print("Usage: task_cil.py update [index old task] [new task name]")
+        return
+    
+    print("hi")
 
 
 def deleting(tasks):
