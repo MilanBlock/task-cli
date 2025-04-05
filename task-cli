@@ -45,6 +45,8 @@ def main():
         last_id = reseting(data)
     elif sys.argv[1] == "help":
         helping()
+    else:
+        print("No valid option. Type task-cli help to see a list of all options")
 
     data["lastId"] = last_id
 
