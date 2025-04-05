@@ -16,7 +16,7 @@ def main():
     # Loading task
     path = os.path.dirname(sys.argv[0]) + r"/tasks.json"
     # Create path and file
-    
+
     try:
         with open(path, "r", encoding="utf-8") as f:
             data = json.load(f)
@@ -97,7 +97,7 @@ def deleting(tasks):
     if len(sys.argv) < 3:
         print("Usage: task-cli delete [index task to delete]")
         return
-    
+
     index = int(sys.argv[2])
 
     for task in tasks:
@@ -111,7 +111,7 @@ def marking(tasks):
     if len(sys.argv) < 4:
         print("Usage: task-cli mark [index task] [status]")
         return
-    
+
     index = int(sys.argv[2])
     status = sys.argv[3]
 
@@ -128,16 +128,16 @@ def marking(tasks):
 def listing(tasks):
     """List all tasks according to filter given"""
     if len(sys.argv) == 2:
-        filter = list(POSIBLE_STATES)
+        filter_states = list(POSIBLE_STATES)
     elif sys.argv[2] not in POSIBLE_STATES:
         print(f"Not a possible state. Posible states are: {POSIBLE_STATES}")
         return
     else:
-        filter = [sys.argv[2]]
-    
+        filter_states = [sys.argv[2]]
+
     filtered_tasks = []
     for task in tasks:
-        if task["status"] in filter:
+        if task["status"] in filter_states:
             filtered_tasks.append(task)
 
     # From hear on only visuals
@@ -184,16 +184,17 @@ def listing(tasks):
             space_status,
             space_description
         ])
-    
+
     # If no task is displayed, show an empty row
     if len(filtered_tasks) == 0:
         print(f"|{' ' * space_id}|{' ' * space_status}|{' ' * space_description}|")
-    
+
     # Print cut-off line
     print(seperator_line)
 
 
 def helping():
+    """Print help message"""
     print("""Usage: task-cli [option]
 Stores a list of tasks          
 
@@ -231,20 +232,15 @@ def print_data_row(data_list):
 
 
 def reseting(data):
+    """Resets all data"""
     print("Do you realy want do delete all task-data? If yes, type: LET ME PURGE EVERYTHING")
     confirmation = input("")
     if confirmation == "LET ME PURGE EVERYTHING":
         data["tasks"] = []
         return 0
-    
+
     print("Aborted.")
     return int(data["lastId"])
 
 
 main()
-
-
-# data = {
-#     "lastId": 0,
-#     "tasks": []
-# }
