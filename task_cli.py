@@ -131,23 +131,3 @@ def listing(tasks):
 
 
 main()
-
-# # Adding a new task
-# task-cli add "Buy groceries"
-# # Output: Task added successfully (ID: 1)
-
-# # Rename and deleting tasks
-# task-cli rename 1 "Buy groceries and cook dinner"
-# task-cli delete 1
-
-# # Marking a task as in progress or done
-# task-cli mark 1 in-progress
-# task-cli mark 1 done
-
-# # Listing all tasks
-# task-cli list
-
-# # Listing tasks by status
-# task-cli list done
-# task-cli list todo
-# task-cli list in-progress
