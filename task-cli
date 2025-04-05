@@ -25,7 +25,7 @@ def main():
     last_id = data["lastId"]
 
     if len(sys.argv) < 2:
-        print("Usage: task_cli.py [action] [additional arguments]")
+        print("Usage: task_cli.py [option] [additional arguments]")
     elif sys.argv[1] == "add":
         last_id = adding(tasks, last_id)
     elif sys.argv[1] == "rename":
@@ -36,6 +36,8 @@ def main():
         marking(tasks)
     elif sys.argv[1] == "list":
         listing(tasks)
+    elif sys.argv[1] == "help":
+        helping()
 
     data["lastId"] = last_id
 
@@ -130,6 +132,18 @@ def listing(tasks):
             description = task["description"]
             status = task["status"]
             print(f"ID: {index}; Status: {status}; Description: {description}")
+
+
+def helping():
+    print("""Usage: task-cli [option]
+Stores a list of tasks          
+
+Options:
+add     : add a new task by typing  task-cli add [task name]
+delete  : delete a task by typing   task-cli delete [task id]
+rename  : rename a task by typing   task-cli rename [task id] [new name]
+mark    : mark a task by typing     task-cli mark [task id] [status]
+list    : show tasks by typing      task-cli list [status]""")
 
 
 main()
