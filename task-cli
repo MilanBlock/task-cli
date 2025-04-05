@@ -26,7 +26,7 @@ def main():
     last_id = data["lastId"]
 
     if len(sys.argv) < 2:
-        print("Usage: task--cli [option] [additional arguments]")
+        print("Usage: task-cli [option] [additional arguments]")
     elif sys.argv[1] == "add":
         last_id = adding(tasks, last_id)
     elif sys.argv[1] == "rename":
@@ -52,7 +52,7 @@ def main():
 def adding(tasks, last_id):
     """Add a new task"""
     if len(sys.argv) < 3:
-        print("Usage: task_cli add [task name]")
+        print("Usage: task-cli add [task name]")
         return last_id
 
     last_id += 1
