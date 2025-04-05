@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 """Task Tracking CLI-Programm"""
 import datetime
 import json
