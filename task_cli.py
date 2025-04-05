@@ -4,6 +4,9 @@ import json
 import sys
 
 
+POSIBLE_STATES = ("todo", "in-progress", "done")
+
+
 def main():
     """Loading tasks, calling correct update funcion and saving task"""
     # Loading task
@@ -27,6 +30,8 @@ def main():
         renaming(tasks)
     elif sys.argv[1] == "delete":
         deleting(tasks)
+    elif sys.argv[1] == "mark":
+        marking(tasks)
     elif sys.argv[1] == "list":
         listing(tasks)
 
@@ -85,6 +90,25 @@ def deleting(tasks):
     for task in tasks:
         if task["id"] == index:
             tasks.remove(task)
+            break
+
+
+def marking(tasks):
+    """Set status of task"""
+    if len(sys.argv) < 4:
+        print("Usage: task_cil.py mark [index task] [status]")
+        return
+    
+    index = int(sys.argv[2])
+    status = sys.argv[3]
+
+    if status not in POSIBLE_STATES:
+        print(f"Posible states are: {POSIBLE_STATES}")
+
+    for task in tasks:
+        if task["id"] == index:
+            task["status"] = status
+            task["updatedAt"] = str(datetime.datetime.now())
             break
 
 
