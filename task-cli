@@ -7,6 +7,7 @@ import sys
 
 
 POSIBLE_STATES = ("todo", "in-progress", "done")
+BUFFER = 4
 
 
 def main():
@@ -126,12 +127,58 @@ def listing(tasks):
     else:
         filter = [sys.argv[2]]
     
+    filtered_tasks = []
     for task in tasks:
         if task["status"] in filter:
-            index = task["id"]
-            description = task["description"]
-            status = task["status"]
-            print(f"ID: {index}; Status: {status}; Description: {description}")
+            filtered_tasks.append(task)
+
+    # From hear on only visuals
+    max_length_id = 2
+    max_length_status = 6
+    max_length_description = 11
+    for task in filtered_tasks:
+        if len(str(task["id"])) > max_length_id:
+            max_length_id = len(str(task["id"]))
+        if len(task["status"]) > max_length_status:
+            max_length_status = len(task["status"])
+        if len(task["description"]) > max_length_description:
+            max_length_description = len(task["description"])
+
+    dashes_id = "-" * (max_length_id + BUFFER)
+    dashes_status = "-" * (max_length_status + BUFFER)
+    dashes_description = "-" * (max_length_description + BUFFER)
+
+    space_id = max_length_id + BUFFER
+    space_status = max_length_status + BUFFER
+    space_description = max_length_description + BUFFER
+
+    seperator_line = f"+{dashes_id}+{dashes_status}+{dashes_description}+"
+    # Print start of table head box
+    print(seperator_line)
+    # Print head items
+    print_data_row([
+        {
+            "id": "ID",
+            "description": "Description",
+            "status": "Status"
+        },
+        space_id,
+        space_status,
+        space_description
+    ])
+    print(seperator_line)
+
+    # Print every task
+    for task in filtered_tasks:
+        print_data_row([
+            task,
+            space_id,
+            space_status,
+            space_description
+        ])
+    
+    # Print cut-off line
+    print(seperator_line)
 
 
 def helping():
@@ -144,6 +191,30 @@ delete  : delete a task by typing   task-cli delete [task id]
 rename  : rename a task by typing   task-cli rename [task id] [new name]
 mark    : mark a task by typing     task-cli mark [task id] [status]
 list    : show tasks by typing      task-cli list [status]""")
+
+
+def print_data_row(data_list):
+    """Print one row of data with formating"""
+    data = data_list[0]
+    space_id = data_list[1]
+    space_status = data_list[2]
+    space_description = data_list[3]
+
+    buffer_id_front = round((space_id - len(str(data["id"]))) / 2)
+    buffer_id_back = space_id - len(str(data["id"])) - buffer_id_front
+
+    buffer_status_front = round((space_status - len(data["status"])) / 2)
+    buffer_status_back = space_status - len(data["status"]) - buffer_status_front
+
+    buffer_description_front = round((space_description - len(data["description"])) / 2)
+    buffer_description_back = space_description - len(data["description"]) - buffer_description_front
+
+    row_id = f"|{' ' * buffer_id_front}{data['id']}{' ' * buffer_id_back}"
+    row_status = f"|{' ' * buffer_status_front}{data['status']}{' ' * buffer_status_back}"
+    row_description = f"|{' ' * buffer_description_front}{data['description']}{' ' * buffer_description_back}"
+
+    row = f"{row_id}{row_status}{row_description}|"
+    print(row)
 
 
 main()
