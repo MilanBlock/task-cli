@@ -37,6 +37,8 @@ def main():
         marking(tasks)
     elif sys.argv[1] == "list":
         listing(tasks)
+    elif sys.argv[1] == "reset":
+        last_id = reseting(data)
     elif sys.argv[1] == "help":
         helping()
 
@@ -190,7 +192,8 @@ add     : add a new task by typing  task-cli add [task name]
 delete  : delete a task by typing   task-cli delete [task id]
 rename  : rename a task by typing   task-cli rename [task id] [new name]
 mark    : mark a task by typing     task-cli mark [task id] [status]
-list    : show tasks by typing      task-cli list [status]""")
+list    : show tasks by typing      task-cli list [status]
+reset   : reset all task            task-cli reset""")
 
 
 def print_data_row(data_list):
@@ -217,4 +220,21 @@ def print_data_row(data_list):
     print(row)
 
 
+def reseting(data):
+    print("Do you realy want do delete all task-data? If yes, type: LET ME PURGE EVERYTHING")
+    confirmation = input("")
+    if confirmation == "LET ME PURGE EVERYTHING":
+        data["tasks"] = []
+        return 0
+    
+    print("Aborted.")
+    return int(data["lastId"])
+
+
 main()
+
+
+# data = {
+#     "lastId": 0,
+#     "tasks": []
+# }
