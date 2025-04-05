@@ -3,6 +3,7 @@
 """Task Tracking CLI-Programm"""
 import datetime
 import json
+import os
 import sys
 
 
@@ -13,8 +14,11 @@ BUFFER = 4
 def main():
     """Loading tasks, calling correct update funcion and saving task"""
     # Loading task
+    path = os.path.dirname(sys.argv[0]) + r"/tasks.json"
+    # Create path and file
+    
     try:
-        with open("tasks.json", "r", encoding="utf-8") as f:
+        with open(path, "r", encoding="utf-8") as f:
             data = json.load(f)
     except (FileNotFoundError, json.decoder.JSONDecodeError):
         data = {
@@ -45,7 +49,7 @@ def main():
     data["lastId"] = last_id
 
     # Saving task
-    with open("tasks.json", "w", encoding="utf-8") as f:
+    with open(path, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=4)
 
 
