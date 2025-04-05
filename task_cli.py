@@ -15,6 +15,7 @@ def main():
             "lastId": 0,
             "tasks": []
         }
+
     tasks = data["tasks"]
     last_id = data["lastId"]
 
@@ -22,8 +23,8 @@ def main():
         print("Usage: task_cli.py [action] [additional arguments]")
     elif sys.argv[1] == "add":
         last_id = adding(tasks, last_id)
-    elif sys.argv[1] == "update":
-        updating(tasks)
+    elif sys.argv[1] == "rename":
+        renaming(tasks)
     elif sys.argv[1] == "delete":
         deleting(tasks)
     elif sys.argv[1] == "list":
@@ -57,13 +58,20 @@ def adding(tasks, last_id):
     return last_id
 
 
-def updating(tasks):
+def renaming(tasks):
     """Changing the name of a task"""
     if len(sys.argv) < 4:
-        print("Usage: task_cil.py update [index old task] [new task name]")
+        print("Usage: task_cil.py rename [index old task] [new task name]")
         return
-    
-    print("hi")
+
+    index = int(sys.argv[2])
+    new_name = sys.argv[3]
+
+    for task in tasks:
+        if task["id"] == index:
+            task["description"] = new_name
+            task["updatedAt"] = str(datetime.datetime.now())
+            break
 
 
 def deleting(tasks):
@@ -102,13 +110,13 @@ main()
 # task-cli add "Buy groceries"
 # # Output: Task added successfully (ID: 1)
 
-# # Updating and deleting tasks
-# task-cli update 1 "Buy groceries and cook dinner"
+# # Rename and deleting tasks
+# task-cli rename 1 "Buy groceries and cook dinner"
 # task-cli delete 1
 
 # # Marking a task as in progress or done
-# task-cli mark-in-progress 1
-# task-cli mark-done 1
+# task-cli mark 1 in-progress
+# task-cli mark 1 done
 
 # # Listing all tasks
 # task-cli list
