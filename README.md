@@ -1,6 +1,8 @@
 # task-cli
 A CLI tool to track ToDos
 
+#### Idea: https://roadmap.sh/projects/task-tracker
+
 #### Dependencies:
 * Pyton 3
 * Don't forget to add the PATH to the file
