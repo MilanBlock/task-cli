@@ -103,7 +103,7 @@ def marking(tasks):
     status = sys.argv[3]
 
     if status not in POSIBLE_STATES:
-        print(f"Posible states are: {POSIBLE_STATES}")
+        print(f"Not a possible state. Posible states are: {POSIBLE_STATES}")
 
     for task in tasks:
         if task["id"] == index:
@@ -113,28 +113,21 @@ def marking(tasks):
 
 
 def listing(tasks):
-    """Calling correct listing function"""
-    print("List tasks TODO")
-
-
-def listing_all(tasks):
-    """Lists all tasks"""
-    print("List all TODO")
-
-
-def listing_done(tasks):
-    """Listing all tasks that are done"""
-    print("List done TODO")
-
-
-def listing_todo(tasks):
-    """Listing all tasks that are todo"""
-    print("List todo TODO")
-
-
-def listing_in_progress(tasks):
-    """Listing all tasks that are in-progress"""
-    print("List in-progress TODO")
+    """List all tasks according to filter given"""
+    if len(sys.argv) == 2:
+        filter = list(POSIBLE_STATES)
+    elif sys.argv[2] not in POSIBLE_STATES:
+        print(f"Not a possible state. Posible states are: {POSIBLE_STATES}")
+        return
+    else:
+        filter = [sys.argv[2]]
+    
+    for task in tasks:
+        if task["status"] in filter:
+            index = task["id"]
+            description = task["description"]
+            status = task["status"]
+            print(f"ID: {index}; Status: {status}; Description: {description}")
 
 
 main()
